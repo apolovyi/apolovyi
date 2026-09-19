@@ -6,9 +6,11 @@
 
 ### YMart: from supplier files to reviewed storefront updates
 
-I designed and built an operations platform connecting supplier spreadsheets, an ERP and an e-commerce storefront. My responsibility spans the backend, the YourMix operations workspace, asynchronous ingestion, infrastructure and delivery.
+Operators can turn supplier files into reviewed price proposals, apply approved changes and inspect individual write outcomes. I designed and built YMart across backend integrations, the YourMix operations workspace, asynchronous ingestion, infrastructure and delivery.
 
-The architecture keeps the business workflow in one modular application while isolating file parsing as a separate workload. Local catalogue projections support operational queries; approval is separate from application so an operator's decision is not confused with a successful external write. The implementation combines Kotlin/Spring, React and Terraform-managed AWS.
+The architecture connects Acumatica ERP and CS-Cart through one modular workflow application, while isolating file parsing as a separate workload. Local catalogue projections support operational queries; approval is separate from application so an operator's decision is not confused with a successful external write.
+
+OpenAPI compatibility checks help prevent breaking API changes; GitHub Actions uses AWS OIDC for backend delivery without stored AWS deployment keys. CloudWatch and Grafana/Loki support diagnosis. The application uses Kotlin/Spring Modulith, PostgreSQL and React, with Terraform-managed AWS.
 
 [Project and implementation](https://github.com/apolovyi/yourmix-showcase) · [Architectural decisions and trade-offs](https://github.com/apolovyi/yourmix-showcase/blob/main/ARCHITECTURE.md)
 
@@ -17,7 +19,7 @@ The architecture keeps the business workflow in one modular application while is
 I maintain forks of developer tools, working on the execution and lifecycle contracts around coding agents:
 
 - **[Pi MCP Adapter](https://github.com/apolovyi/pi-mcp-adapter):** failed calls stop dependent execution unless explicitly handled; invalid arguments are rejected before approval or dispatch. My changes also address helper-process cleanup without losing buffered output.
-- **[Pi](https://github.com/apolovyi/pi):** my work separates compaction trigger and summary budgets, retains prior context during split-turn summaries, restores recovery after failed compaction, and exposes lifecycle events to extensions.
+- **[Pi](https://github.com/apolovyi/pi):** my changes help long-running agent sessions recover from failed compaction and make that lifecycle visible to extensions. I restored automatic retries after cooldown and exposed typed lifecycle events, while separating compaction trigger and summary budgets and retaining prior summaries during split-turn compaction.
 
 Each fork's overview links the design decisions to implementing changes and regression tests.
 
